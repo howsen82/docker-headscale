@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  headscale:
+    container_name: headscale
+    image: headscale/headscale:latest
+    volumes:
+      - ./config:/etc/headscale/
+      - ./data:/var/lib/headscale
+    ports:
+      - 8080:8080
+    command: headscale serve
+    restart: unless-stopped
+
+# docker compose up -d && docker compose logs -f
+# Ctrl + C to cancelled logs
+# docker compose exec headscale headscale nodes list // Check connected users
+# docker compose exec headscale headscale users create <user>
+# docker compose exec headscale headscale preauthkeys create -e 48h -u <user>
+
+# curl -fsSL https://tailscale.com/install.sh | sh
+# sudo tailscale up --login-server https://headscale.yourdomain.org --authkey <paste your super long strong key here>
